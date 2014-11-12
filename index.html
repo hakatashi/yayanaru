@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>yayanaru</title>
+		<script src="/socket.io/socket.io.js" charset="utf-8"></script>
+		<script charset="utf-8">
+			var socket = io('http://localhost:10001')
+			socket.on('data', function (data) {
+				console.log(data);
+			});
+		</script>
+	</head>
+	<body>
+		<h1>hi there</h1>
+	</body>
+</html>

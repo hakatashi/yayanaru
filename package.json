@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/hakatashi/yayanaru-server",
   "dependencies": {
-    "serialport": "^1.4.6"
+    "serialport": "^1.4.6",
+    "socket.io": "^1.2.0"
   }
 }
