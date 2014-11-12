@@ -1,0 +1,22 @@
+{
+  "name": "yayanaru-server",
+  "version": "1.0.0",
+  "description": "This is the sensor side programming of Yosakoi-Music-Game YAYANARU.",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hakatashi/yayanaru-server.git"
+  },
+  "author": "hakatashi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hakatashi/yayanaru-server/issues"
+  },
+  "homepage": "https://github.com/hakatashi/yayanaru-server",
+  "dependencies": {
+    "serialport": "^1.4.6"
+  }
+}
