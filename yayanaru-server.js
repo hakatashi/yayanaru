@@ -1,24 +1,37 @@
 var SerialPort = require('serialport').SerialPort;
 var socketio = require('socket.io');
+var express = require('express');
+var morgan = require('morgan');
 
 var http = require('http');
 var fs = require('fs');
 
 // HTTP Server
 
-var app = http.createServer(function (req, res) {
-	fs.readFile(__dirname + '/index.html', function (error, data) {
-		if (error) {
-			res.writeHead(500);
-			return res.end(error);
-		}
+var app = express();
 
-		res.writeHead(200);
-		return res.end(data);
+app.use(morgan('combined'));
+app.use(express.static(__dirname));
+
+// catch 404 and forward to error handler
+app.use(function (req, res, next) {
+	var err = new Error('Not Found');
+	err.status = 404;
+	next(err);
+});
+
+// error handler
+app.use(function (err, req, res, next) {
+	res.status(err.status || 500);
+	res.render('error', {
+		message: err.message,
+		error: err
 	});
 });
 
-app.listen(10001);
+var server = app.listen(10001, function () {
+	console.log('Express server listening on port ' + server.address().port);
+});
 
 // Serialport Communication
 
@@ -34,4 +47,4 @@ serialport.on('open', function () {
 
 // WebSocket Configuration
 
-var io = socketio(app);
+var io = socketio(server);
