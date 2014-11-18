@@ -1,9 +1,5 @@
 var socket = io('http://localhost:10001');
 
-socket.on('data', function (data) {
-	var acc = JSON.parse(data);
-});
-
 function onResize(event) {
 	var $wrap = $('#gamewrapper');
 	var width = Math.min($(window).width(), $(window).height() / 9 * 16);
@@ -45,5 +41,30 @@ $(document).ready(function () {
 
 	var svg = Snap('#svg');
 
-	var circle = svg.circle(150, 150, 100);
+	var pastAcc = null;
+	var pastImpact = new Date(0);
+	socket.on('data', function (data) {
+		var acc = JSON.parse(data);
+		var now = new Date();
+
+		if (pastAcc !== null) {
+			var diff = {
+				x: acc.x - pastAcc.x,
+				y: acc.y - pastAcc.y,
+				z: acc.z - pastAcc.z
+			};
+
+			var impact = Math.sqrt(diff.x * diff.x + diff.y * diff.y + diff.z * diff.z);
+			if (impact > 250 && now - pastImpact > 200) {
+				var impact = svg.rect(0, 0, 1600, 900).attr({fill: 'red'});
+				impact.animate({
+					opacity: 0
+				}, 300, function () {
+					impact.remove();
+				});
+				pastImpact = now;
+			}
+		}
+		pastAcc = acc;
+	});
 })
