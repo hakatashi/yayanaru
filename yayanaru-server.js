@@ -35,7 +35,10 @@ var server = app.listen(10001, function () {
 
 // Serialport Communication
 
-var serialport = new SerialPort('COM3');
+var serialPath = process.argv[2];
+var serialport;
+
+serialport = new SerialPort(serialPath);
 
 serialport.on('open', function () {
 	console.log('Serialport is open.');
