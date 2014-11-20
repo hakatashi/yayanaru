@@ -1,6 +1,11 @@
+int ledPin = 13;  
+
 void setup() {
-  Serial.begin(9600) ;
+  pinMode(ledPin, OUTPUT);
+  digitalWrite(ledPin, HIGH);
+  Serial.begin(9600);
 }
+
 void loop()
 {
   int i;
@@ -14,7 +19,7 @@ void loop()
   x = x / 100;
   y = y / 100;
   z = z / 100;
-  Serial.print("{\"x\":" + String(x) + ",\"y\":" + String(y) + ",\"z\":" + String(z) + "}\n");
+  Serial.print("{\"id\":0,\"x\":" + String(x) + ",\"y\":" + String(y) + ",\"z\":" + String(z) + "}\n");
   delay(40);
 }
 
