@@ -43,8 +43,16 @@ serialport = new SerialPort(serialPath);
 serialport.on('open', function () {
 	console.log('Serialport is open.');
 	serialport.on('data', function (data) {
-		var acc = JSON.parse(data.toString().split('\n')[0]);
-		io.sockets.emit('data', JSON.stringify(acc));
+		data.toString().split('\n').forEach(function (datum) {
+			if (datum) {
+				try {
+					var acc = JSON.parse(datum);
+					io.sockets.emit('data', JSON.stringify(acc));
+				} catch (e) {
+					console.error(e, datum);
+				}
+			}
+		});
 	});
 });
 

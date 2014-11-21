@@ -283,7 +283,7 @@ $(document).ready(function () {
 			if (impact > 250 && now - pastImpact > 200) {
 				jQuery.event.trigger({
 					type: 'keypress',
-					which: 'l'.charCodeAt(0)
+					which: acc.id ? RIGHT : LEFT
 				});
 				pastImpact = now;
 			}
