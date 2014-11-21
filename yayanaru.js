@@ -13,6 +13,10 @@ var HITRIGHT_Y = 550;
 var HITLEFT_Y = 200;
 var HITRADIUS = 50;
 
+var enableEnter = true;
+var waitingEnter = false;
+var timeoutID;
+
 var songs = [{
 	title: '花ハ踊レヤいろはにほ (難易度: 5)',
 	id: 'F9TuIVpBi5I',
@@ -266,28 +270,49 @@ $(document).ready(function () {
 
 	svg = Snap('#svg');
 
-	var pastAcc = null;
-	var pastImpact = new Date(0);
+	var pastAcc = [null, null];
+	var pastImpact = [new Date(0), new Date(0)];
 	socket.on('data', function (data) {
 		var acc = JSON.parse(data);
 		var now = new Date();
 
-		if (pastAcc !== null) {
+		if (pastAcc[acc.id] !== null) {
 			var diff = {
-				x: acc.x - pastAcc.x,
-				y: acc.y - pastAcc.y,
-				z: acc.z - pastAcc.z
+				x: acc.x - pastAcc[acc.id].x,
+				y: acc.y - pastAcc[acc.id].y,
+				z: acc.z - pastAcc[acc.id].z
 			};
 
 			var impact = Math.sqrt(diff.x * diff.x + diff.y * diff.y + diff.z * diff.z);
-			if (impact > 250 && now - pastImpact > 200) {
-				jQuery.event.trigger({
-					type: 'keypress',
-					which: acc.id ? RIGHT : LEFT
-				});
-				pastImpact = now;
+			if (impact > 250 && now - pastImpact[acc.id] > 200) {
+				if (enableEnter) {
+					console.log(waitingEnter);
+					if (waitingEnter && waitingEnter !== (acc.id ? RIGHT : LEFT)) {
+						clearTimeout(timeoutID);
+						jQuery.event.trigger({
+							type: 'keypress',
+							which: ENTER
+						});
+						waitingEnter = false;
+					} else {
+						timeoutID = setTimeout(function () {
+							jQuery.event.trigger({
+								type: 'keypress',
+								which: acc.id ? RIGHT : LEFT
+							});
+							waitingEnter = false;
+						}, 200);
+						waitingEnter = acc.id ? RIGHT : LEFT;
+					}
+				} else {
+					jQuery.event.trigger({
+						type: 'keypress',
+						which: acc.id ? RIGHT : LEFT
+					});
+				}
+				pastImpact[acc.id] = now;
 			}
 		}
-		pastAcc = acc;
+		pastAcc[acc.id] = acc;
 	});
 })
