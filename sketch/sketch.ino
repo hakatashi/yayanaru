@@ -1,25 +1,28 @@
-int ledPin = 13;  
-
 void setup() {
-  pinMode(ledPin, OUTPUT);
-  digitalWrite(ledPin, HIGH);
   Serial.begin(9600);
 }
 
 void loop()
 {
   int i;
-  long x, y, z;
-  x = y = z = 0;
+  long ax, ay, az, bx, by, bz;
+  ax = ay = az = bx = by = bz = 0;
   for (i = 0; i < 100; i++) {
-    x = x + analogRead(0);
-    y = y + analogRead(1);
-    z = z + analogRead(2);
+    ax = ax + analogRead(0);
+    ay = ay + analogRead(1);
+    az = az + analogRead(2);
+    bx = bx + analogRead(3);
+    by = by + analogRead(4);
+    bz = bz + analogRead(5);
   }
-  x = x / 100;
-  y = y / 100;
-  z = z / 100;
-  Serial.print("{\"id\":0,\"x\":" + String(x) + ",\"y\":" + String(y) + ",\"z\":" + String(z) + "}\n");
+  ax = ax / 100;
+  ay = ay / 100;
+  az = az / 100;
+  bx = bx / 100;
+  by = by / 100;
+  bz = bz / 100;
+  Serial.print("{\"id\":0,\"x\":" + String(ax) + ",\"y\":" + String(ay) + ",\"z\":" + String(az) + "}\n");
+  Serial.print("{\"id\":1,\"x\":" + String(bx) + ",\"y\":" + String(by) + ",\"z\":" + String(bz) + "}\n");
   delay(40);
 }
 
