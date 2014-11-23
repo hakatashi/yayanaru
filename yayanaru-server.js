@@ -37,7 +37,7 @@ var server = app.listen(10001, function () {
 
 var serialPath = process.argv[2];
 var serialport;
-
+/*
 serialport = new SerialPort(serialPath);
 
 serialport.on('open', function () {
@@ -55,7 +55,7 @@ serialport.on('open', function () {
 		});
 	});
 });
-
+*/
 // WebSocket Configuration
 
 var io = socketio(server);
