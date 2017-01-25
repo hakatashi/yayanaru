@@ -8,6 +8,8 @@ Check out video!
 
 # Summary
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/hakatashi/yayanaru.svg)](https://greenkeeper.io/)
+
 yayanaru is music game developed toward the exhibition of [TSG](http://www.tsg.ne.jp/)
 booth in [Komaba Festival 2014](http://www.komabasai.net/65/visitor/), which is
 annual festival of the University of Tokyo.
